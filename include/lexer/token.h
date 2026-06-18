@@ -16,7 +16,7 @@ typedef enum token_type_e {
     AND, OR, NOT,
     SEMICOLON, COLON, COMMA, DOT,
     LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE,
-    ID, NUMBER, REAL32, REAL64, CHARACTER_L, STRING_L
+    ID, LITTERAL
 } token_type;
 
 typedef unsigned int token;
@@ -25,14 +25,6 @@ token simple_token(token_type type);
 
 token id_token(unsigned int index);
 
-token number_token(unsigned int index);
-
-token real32_token(unsigned int index);
-
-token real64_token(unsigned int index);
-
-token character_l_token(unsigned int index);
-
-token string_l_token(unsigned int index);
+token litteral(unsigned int index);
 
 #endif

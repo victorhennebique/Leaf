@@ -1,8 +1,13 @@
 #ifndef _UNICODE_STRING_H_
 #define _UNICODE_STRING_H_
 
-#include "../../external/utf8proc/utf8proc.h"
+#include <stddef.h>
 
-typedef struct unicode_string_s unicode_string;
+#include "utf8proc.h"
+
+typedef struct unicode_string_s {
+    utf8proc_int32_t* data;
+    size_t len;
+} unicode_string;
 
 #endif

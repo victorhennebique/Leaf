@@ -1,0 +1,23 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-I./src",
+      "-I./include",
+      "-I./external/utf8proc",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-fsanitize=address",
+      "-fsanitize=undefined",
+      "./build/utf8proc.o",
+      "-o",
+      "./bin/main",
+      "./src/main.c"
+    ],
+    "directory": "/home/victor/Documents/Projets/Leaf",
+    "file": "/home/victor/Documents/Projets/Leaf/src/main.c",
+    "output": "/home/victor/Documents/Projets/Leaf/bin/main"
+  }
+]

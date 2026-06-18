@@ -1,7 +1,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include "../../include/lexer/lexer.h"
+#include "lexer/lexer.h"
 
 
 tokenized_set tokenize(char text[])
