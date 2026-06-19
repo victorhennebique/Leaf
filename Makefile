@@ -2,7 +2,8 @@ CC=gcc
 
 CFLAGS=-Wall -Wextra -Werror \
        -fsanitize=address \
-       -fsanitize=undefined
+       -fsanitize=undefined \
+       -g -O0
 
 CPPFLAGS=-I./src \
          -I./include \
@@ -14,7 +15,8 @@ UTF8PROC_DIR=./external/utf8proc
 UTF8PROC_OBJ=./build/utf8proc.o
 
 SRC=./src/main.c \
-    ./src/scanner/scanner.c
+    ./src/scanner/scanner.c \
+    ./src/utils/error.c
 
 
 all: $(EXEC)

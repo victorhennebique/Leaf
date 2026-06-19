@@ -6,8 +6,12 @@
 #include "utf8proc.h"
 
 typedef struct unicode_string_s {
-    utf8proc_int32_t* data;
+    utf8proc_int32_t *data;
     size_t len;
 } unicode_string;
 
+typedef struct unicode_string_array_s {
+    unicode_string *tab;
+    size_t len;
+} unicode_string_array;
 #endif

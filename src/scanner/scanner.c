@@ -5,17 +5,22 @@
 
 #include "scanner/scanner.h"
 #include "utf8proc.h"
+#include "utils/error.h"
 #include "utils/unicode_string.h"
 
-unicode_string scan(char* name_file)
+
+unicode_string scan(char* name_file, error *e)
 {
     assert(name_file != NULL);
 
     FILE *f = fopen(name_file, "rb");
     if(f == NULL)
     {
-        perror(name_file);
-        assert(false);
+        msg_scanner_opening_error(name_file);
+
+        *e = SCANNER_OPENING_ERROR;
+        unicode_string res = {.data = NULL, .len = 0};
+        return res;
     }
 
     fseek(f, 0, SEEK_END);
@@ -33,25 +38,39 @@ unicode_string scan(char* name_file)
     utf8proc_uint8_t* norm_buf = utf8proc_NFC((utf8proc_uint8_t*)buf);
     free(buf);
 
-    utf8proc_int32_t* tmp = malloc(size * sizeof(utf8proc_int32_t));
+    size_t bytes = strlen((char *)norm_buf);
+    utf8proc_int32_t* tmp = malloc(bytes * sizeof(utf8proc_int32_t));
     assert(tmp != NULL);
 
     utf8proc_uint8_t* start = norm_buf;
-    size_t remaining = size;
     size_t i = 0;
+    unsigned int line = 1;
 
-    while(remaining > 0)
+    while(norm_buf[0] != '\0')
     {
+        if(norm_buf[0] == '\n')
+        {
+            line++;
+            norm_buf++;
+            continue;
+        }
+
         utf8proc_ssize_t n = utf8proc_iterate(norm_buf, -1, (tmp + i));
 
         if(n < 0)
         {
-            printf("Invalid character in %s\n", name_file);
-            break;
+            msg_scanner_invalid_character(name_file, line);
+
+            unicode_string res = {.data = NULL, .len = norm_buf - start};
+
+            free(tmp);
+            free(start);
+
+            *e = SCANNER_INVALID_CHAR;
+            return res;
         }
 
         norm_buf += n;
-        remaining -= n;
         i++;
     }
 
@@ -66,6 +85,7 @@ unicode_string scan(char* name_file)
 
     free(tmp);
 
+    *e = NONE;
     unicode_string res = {.data = data, .len = len};
     return res;
 }

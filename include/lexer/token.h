@@ -2,8 +2,8 @@
 #define _TOKEN_H_
 
 typedef enum token_type_e {
-    LET, CONST, VOID, FN, RETURN,
-    STRUCT, ENUM, UNION,
+    LET = 1, CONST, VOID, FN, RETURN,
+    STRUCT, SUM,
     IF, ELSE, SWITCH, CASE, DEFAULT,
     FOR, WHILE, BREAK, CONTINUE,
     I8, I16, I32, I64,
@@ -14,7 +14,7 @@ typedef enum token_type_e {
     PLUS, MINUS, TIMES, DIVIDE, MOD,
     EQUALS, DIFFERENTS, INF, SUP, INF_EQ, SUP_EQ,
     AND, OR, NOT,
-    SEMICOLON, COLON, COMMA, DOT,
+    SEMICOLON, COLON, COMMA, DOT, ARROW,
     LPAREN, RPAREN, LBRACKET, RBRACKET, LBRACE, RBRACE,
     ID, LITTERAL
 } token_type;
