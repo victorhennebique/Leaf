@@ -48,13 +48,6 @@ unicode_string scan(char* name_file, error *e)
 
     while(norm_buf[0] != '\0')
     {
-        if(norm_buf[0] == '\n')
-        {
-            line++;
-            norm_buf++;
-            continue;
-        }
-
         utf8proc_ssize_t n = utf8proc_iterate(norm_buf, -1, (tmp + i));
 
         if(n < 0)
@@ -77,11 +70,12 @@ unicode_string scan(char* name_file, error *e)
     free(start);
 
     size_t len = i;
-    utf8proc_int32_t* data = malloc(len * sizeof(utf8proc_int32_t));
+    utf8proc_int32_t* data = malloc((len + 1) * sizeof(utf8proc_int32_t));
     for(size_t j = 0; j < len; j++)
     {
         data[j] = tmp[j];
     }
+    data[len] = '\0';
 
     free(tmp);
 
